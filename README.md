@@ -15,8 +15,7 @@ It uses a powerful stack of embedded systems, LiDAR sensors, optical flow, and c
 ---
 
 ## 🧭 System Architecture
-
-![System Architecture](images/anav_architecture.png)
+![System Architecture](images/system_architecture.jpg)
 
 > ANAV integrates CubePilot Orange for low-level flight control and Raspberry Pi 5 for high-level mission logic and perception. Position control is maintained using HereFlow Optical Flow and TFMini LiDAR in a GPS-denied environment.
 
@@ -92,6 +91,11 @@ ANAV incorporates both **hardware-level** and **software-level** safety mechanis
 - ✅ **Mentored by ISRO Officials & Academicians**
 
 ---
+## 👥 Meet the Team – AetherX
+
+![Team AetherX](images/Team.jpg)
+
+> The team behind ANAV during the ISRO Challenge 2025 qualification round.
 
 ## 🧑‍💻 Team & Roles
 
@@ -105,14 +109,27 @@ ANAV incorporates both **hardware-level** and **software-level** safety mechanis
 | Testing & Validation Lead | Hover tests, emergency handling, calibration debugging    |
 
 ---
+## 📸 Drone Hover Test (Qualification)
 
+![ANAV Drone](images/ANAV_Drone_Non_GPS.jpg)
+
+> The ANAV drone successfully completed the 30-second hover test indoors without GPS, marking a milestone toward ISRO qualification.
+> Demo Link:
+Step-1:https://www.linkedin.com/posts/manoj-kumar-a-21ab69258_isrochallenge2025-anav-autonomousdrone-activity-7318255793064013825--IQ0?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD-IJ_YBhobnLH6whfYELdDO6jWCCjCAHqk
+Step-2-Final:https://www.linkedin.com/posts/msrc-msmf-0bb8742bb_isrochallenge2025-spacetechnology-engineeringinspiration-ugcPost-7322105078079791104-m5ez?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD-IJ_YBhobnLH6whfYELdDO6jWCCjCAHqk
+---
 ## 🏆 Recognition
 
 ✅ Successfully qualified the **ISRO IRoC-U 2025 Challenge – Qualification Round**  
 📄 Full [Design Report (PDF)](ANAV_Report.pdf) available in this repository
 
 ---
+## 🎓 Built At – GPCET (G. Pullaiah College of Engineering and Technology)
 
+![GPCET](images/GPCET.jpg)
+
+> The ANAV drone system was designed, built, and tested at GPCET, Kurnool, under expert mentorship and ISRO collaboration.
+----
 ## 📄 License
 
 This project is licensed under the [MIT License](LICENSE)
