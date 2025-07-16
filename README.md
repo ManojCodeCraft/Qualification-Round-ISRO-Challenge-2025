@@ -115,8 +115,11 @@ ANAV incorporates both **hardware-level** and **software-level** safety mechanis
 
 > The ANAV drone successfully completed the 30-second hover test indoors without GPS, marking a milestone toward ISRO qualification.
 > Demo Link:
-Step-1:https://www.linkedin.com/posts/manoj-kumar-a-21ab69258_isrochallenge2025-anav-autonomousdrone-activity-7318255793064013825--IQ0?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD-IJ_YBhobnLH6whfYELdDO6jWCCjCAHqk
-Step-2-Final:https://www.linkedin.com/posts/msrc-msmf-0bb8742bb_isrochallenge2025-spacetechnology-engineeringinspiration-ugcPost-7322105078079791104-m5ez?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD-IJ_YBhobnLH6whfYELdDO6jWCCjCAHqk
+## 🪐 ISRO Challenge 2025 – Milestones
+
+- [📍 Step 1 – LinkedIn Post by Manoj Kumar (Initial Demo)](https://www.linkedin.com/posts/manoj-kumar-a-21ab69258_isrochallenge2025-anav-autonomousdrone-activity-7318255793064013825--IQ0)
+- [🏁 Step 2 – Final Recognition by MSMF on LinkedIn](https://www.linkedin.com/posts/msrc-msmf-0bb8742bb_isrochallenge2025-spacetechnology-engineeringinspiration-ugcPost-7322105078079791104-m5ez)
+
 ---
 ## 🏆 Recognition
 
