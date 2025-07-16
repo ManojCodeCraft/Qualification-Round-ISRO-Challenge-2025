@@ -91,12 +91,6 @@ ANAV incorporates both **hardware-level** and **software-level** safety mechanis
 - ✅ **Mentored by ISRO Officials & Academicians**
 
 ---
-## 👥 Meet the Team – AetherX
-
-![Team AetherX](images/Team.jpg)
-
-> The team behind ANAV during the ISRO Challenge 2025 qualification round.
-
 ## 🧑‍💻 Team & Roles
 
 | Role                      | Responsibilities                                         |
@@ -124,7 +118,7 @@ ANAV incorporates both **hardware-level** and **software-level** safety mechanis
 ## 🏆 Recognition
 
 ✅ Successfully qualified the **ISRO IRoC-U 2025 Challenge – Qualification Round**  
-📄 Full [Design Report (PDF)](ANAV_Report.pdf) available in this repository
+📄 [Full Design Report (PDF)](https://github.com/ManojCodeCraft/Qualification-Round-ISRO-Challenge-2025/blob/main/QUALIFICATION%20ROUND/docs/ANAV%20DESIGN%20REPORT.pdf)
 
 ---
 ## 🎓 Built At – GPCET (G. Pullaiah College of Engineering and Technology)
