@@ -5,6 +5,23 @@
 **Stage: Qualified the National Level with GPS-Denied Autonomous Drone**
 
 ---
+## 🔍 At a Glance
+
+### 🧩 Problem it Solves
+Designing an **autonomous drone system** that can **take off, hover, and land without GPS**, addressing real-world challenges in **GPS-denied environments** such as **indoor settings, underground zones, or extraterrestrial terrains like Mars**. This directly aligns with ISRO's goals for **space and planetary exploration**.
+
+### ✨ Key Features
+- ✅ **Autonomous Takeoff–Hover–Landing** using LiDAR and Optical Flow (No GPS)
+- 🛰️ **GPS-Denied Position Estimation** using HereFlow + TFMini-S + IMU fusion
+- 🛡️ **Failsafe Handling**: Auto-landing on battery drop, link loss, or sensor errors
+- 📡 Real-time communication between **Raspberry Pi 5** and **CubePilot Orange**
+- 📦 Fully documented with system diagrams, tests, and emergency handling logic
+
+### 🛠️ Tech Stack
+- **Hardware**: DJI F450, Raspberry Pi 5, CubePilot Orange, Optical Flow, LiDAR, ESCs  
+- **Software**: MAVROS, Python, C++, MAVLink, PX4 Firmware  
+- **Tools**: Mission Planner, QGroundControl, Git, Ubuntu 20.04  
+---
 
 ## 📖 Project Overview
 
