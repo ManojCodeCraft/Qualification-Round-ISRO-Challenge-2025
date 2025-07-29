@@ -6,7 +6,7 @@ master = mavutil.mavlink_connection("/dev/ttyUSB0", baud=57600)
 
 print("⏳ Waiting for heartbeat from Cube+...")
 master.wait_heartbeat()
-print("✅ Cube+ connection established!")
+print("Cube+ connection established!")
 
 
 while True:
@@ -14,8 +14,7 @@ while True:
     baro_alt = None
     baro_msg = master.recv_match(type="GLOBAL_POSITION_INT", blocking=False)
     if baro_msg:
-        baro_alt = baro_msg.relative_alt / 1000.0  # Convert mm to meters
-
+        baro_alt = baro_msg.relative_alt / 1000.0 
     
     lidar_alt = None
     lidar_msg = master.recv_match(type="DISTANCE_SENSOR", blocking=False)
