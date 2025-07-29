@@ -1,14 +1,12 @@
 import sys
 from rplidar import RPLidar
 
-# Auto-detect USB port
 import glob
 PORTS = glob.glob("/dev/ttyUSB1")
 if not PORTS:
     raise Exception("⚠ No LIDAR device detected!")
 PORT_NAME = PORTS[0]
 
-# Initialize LIDAR
 lidar = RPLidar(PORT_NAME, baudrate=115200)
 
 def get_lidar_data():
@@ -24,9 +22,9 @@ def get_lidar_data():
                             distances['forward'] = min(distances['forward'], distance / 1000.0)
                         elif 135 <= angle <= 225:
                             distances['backward'] = min(distances['backward'], distance / 1000.0)
-                        elif 45 <= angle <= 135:  # Swapped Left → Right
+                        elif 45 <= angle <= 135:  
                             distances['right'] = min(distances['right'], distance / 1000.0)
-                        elif 225 <= angle <= 315:  # Swapped Right → Left
+                        elif 225 <= angle <= 315: 
                             distances['left'] = min(distances['left'], distance / 1000.0)
 
                 print(f"🔍 LiDAR Readings - Left: {distances['left']}m, Right: {distances['right']}m, "
@@ -41,6 +39,5 @@ def get_lidar_data():
         lidar.stop()
         lidar.disconnect()
 
-# Run program
 if __name__ == "__main__":
     get_lidar_data()
