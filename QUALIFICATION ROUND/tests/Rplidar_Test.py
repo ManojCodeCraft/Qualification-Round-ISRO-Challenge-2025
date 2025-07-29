@@ -4,7 +4,7 @@ from rplidar import RPLidar
 import glob
 PORTS = glob.glob("/dev/ttyUSB1")
 if not PORTS:
-    raise Exception("⚠ No LIDAR device detected!")
+    raise Exception(" No LIDAR device detected!")
 PORT_NAME = PORTS[0]
 
 lidar = RPLidar(PORT_NAME, baudrate=115200)
@@ -27,15 +27,15 @@ def get_lidar_data():
                         elif 225 <= angle <= 315: 
                             distances['left'] = min(distances['left'], distance / 1000.0)
 
-                print(f"🔍 LiDAR Readings - Left: {distances['left']}m, Right: {distances['right']}m, "
+                print(f"LiDAR Readings - Left: {distances['left']}m, Right: {distances['right']}m, "
                       f"Forward: {distances['forward']}m, Backward: {distances['backward']}m")
 
     except KeyboardInterrupt:
-        print("\n🛑 Stopping scan by user...")
+        print("\nStopping scan by user...")
     except Exception as e:
-        print(f"⚠ Error: {e}")
+        print(f"Error: {e}")
     finally:
-        print("🔌 Disconnecting LIDAR...")
+        print("Disconnecting LIDAR...")
         lidar.stop()
         lidar.disconnect()
 
