@@ -3,7 +3,7 @@ import time
 
 master = mavutil.mavlink_connection('/dev/ttyUSB0', baud=57600)
 master.wait_heartbeat()
-print("✅ Heartbeat received!")
+print("Heartbeat received!")
 
 print("Arming motors...")
 master.mav.command_long_send(
