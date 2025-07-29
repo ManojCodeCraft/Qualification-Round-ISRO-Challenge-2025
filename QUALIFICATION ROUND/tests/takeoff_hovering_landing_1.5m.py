@@ -3,36 +3,36 @@ from pymavlink import mavutil
 
 
 def connect_mavlink():
-    print("🔄 Connecting via MAVLink...")
+    print("Connecting via MAVLink...")
     master = mavutil.mavlink_connection('/dev/ttyUSB0', baud=57600)
     master.wait_heartbeat()
-    print("✅ MAVLink connected!")
+    print("MAVLink connected!")
     return master
 
 
 def get_lidar_altitude(master):
     msg = master.recv_match(type="DISTANCE_SENSOR", blocking=True, timeout=2.0)
     if msg:
-        lidar_alt = msg.current_distance / 100.0  # cm to meters
-        print(f"📡 LIDAR Altitude: {lidar_alt:.2f} m")
+        lidar_alt = msg.current_distance / 100.0  
+        print(f"LIDAR Altitude: {lidar_alt:.2f} m")
         return lidar_alt
     else:
-        print("⚠ No LiDAR data received!")
+        print("No LiDAR data received!")
         return None
 
 
 def arm_motors(master):
-    print("🛠 Arming motors...")
+    print("Arming motors...")
     master.mav.command_long_send(
         master.target_system, master.target_component,
         mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, 0, 1, 0, 0, 0, 0, 0, 0
     )
     master.motors_armed_wait()
-    print("✅ Motors armed")
+    print("Motors armed")
 
 
 def set_alt_hold_mode(master):
-    print("🔄 Switching to ALT_HOLD mode...")
+    print("Switching to ALT_HOLD mode...")
     mode = 'ALT_HOLD'
     mode_id = master.mode_mapping()[mode]
     master.mav.set_mode_send(
@@ -40,11 +40,11 @@ def set_alt_hold_mode(master):
         mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
         mode_id
     )
-    print(f"✅ Mode set to {mode}")
+    print(f"Mode set to {mode}")
 
 
 def takeoff_to_altitude(master, target_alt):
-    print(f"🚀 Taking off to {target_alt} meters using LIDAR...")
+    print(f"Taking off to {target_alt} meters using LIDAR...")
 
     throttle = 1500  
     while True:
@@ -55,9 +55,9 @@ def takeoff_to_altitude(master, target_alt):
         
         if lidar_alt < target_alt * 0.95:
             throttle = min(throttle + 10, 1700)
-            print(f"⬆ Increasing throttle: {throttle}")
+            print(f"Increasing throttle: {throttle}")
         else:
-            print(f"✅ Target altitude reached: {lidar_alt:.2f}m")
+            print(f"Target altitude reached: {lidar_alt:.2f}m")
             break
 
         master.mav.rc_channels_override_send(
@@ -68,7 +68,7 @@ def takeoff_to_altitude(master, target_alt):
 
 
 def hover_using_lidar(master, target_altitude, duration=10):
-    print(f"🛸 Hovering at {target_altitude}m for {duration} seconds using LIDAR (Conditional Control)...")
+    print(f"Hovering at {target_altitude}m for {duration} seconds using LIDAR (Conditional Control)...")
 
     hover_time = 0
     neutral_throttle = 1500
@@ -80,7 +80,7 @@ def hover_using_lidar(master, target_altitude, duration=10):
 
         throttle = neutral_throttle  
 
-        print(f"✅ Stable at {lidar_alt:.2f}m - Holding throttle")
+        print(f"Stable at {lidar_alt:.2f}m - Holding throttle")
 
         master.mav.rc_channels_override_send(
             master.target_system, master.target_component,
@@ -90,7 +90,7 @@ def hover_using_lidar(master, target_altitude, duration=10):
         hover_time += 0.3
         time.sleep(0.3)
 
-    print("✅ Hover complete, resetting throttle")
+    print("Hover complete, resetting throttle")
     master.mav.rc_channels_override_send(
         master.target_system, master.target_component,
         0, 0, neutral_throttle, 0, 0, 0, 0, 0
@@ -98,7 +98,7 @@ def hover_using_lidar(master, target_altitude, duration=10):
 
 
 def gradual_landing(master):
-    print("🛬 Starting gradual landing...")
+    print("Starting gradual landing...")
 
     while True:
         lidar_alt = get_lidar_altitude(master)
@@ -106,7 +106,7 @@ def gradual_landing(master):
             continue
 
         if lidar_alt <= 0.3:
-            print("✅ Touchdown confirmed")
+            print("Touchdown confirmed")
             break
 
        
@@ -123,7 +123,7 @@ def gradual_landing(master):
             master.target_system, master.target_component,
             0, 0, throttle, 0, 0, 0, 0, 0
         )
-        print(f"🔽 Descending - Throttle: {throttle}")
+        print(f"Descending - Throttle: {throttle}")
         time.sleep(1)
 
     
@@ -133,12 +133,12 @@ def gradual_landing(master):
     )
 
     
-    print("🛑 Disarming motors...")
+    print("Disarming motors...")
     master.mav.command_long_send(
         master.target_system, master.target_component,
         mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, 0, 0, 0, 0, 0, 0, 0, 0
     )
-    print("✅ Motors disarmed")
+    print("Motors disarmed")
 
 
 if __name__ == "__main__":
@@ -153,6 +153,6 @@ if __name__ == "__main__":
         gradual_landing(master)
 
     finally:
-        print("🔌 Disconnecting...")
+        print("Disconnecting...")
         master.close()
-        print("✅ Disconnected successfully!")
+        print("Disconnected successfully!")
