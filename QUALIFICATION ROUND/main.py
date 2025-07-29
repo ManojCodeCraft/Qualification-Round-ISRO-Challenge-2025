@@ -1,36 +1,36 @@
 import time
 from pymavlink import mavutil
 
-# ------------------ [1] Connect to Vehicle ------------------
+
 def connect_mavlink():
-    print("🔄 Connecting via MAVLink...")
+    print("Connecting via MAVLink...")
     master = mavutil.mavlink_connection('/dev/ttyUSB0', baud=57600)
     master.wait_heartbeat()
-    print("✅ MAVLink connected!")
+    print("MAVLink connected!")
     return master
 
-# ------------------ [2] Fetch Altitude (Cube+ Barometer) ------------------
+
 def get_altitude(master):
     msg = master.recv_match(type="GLOBAL_POSITION_INT", blocking=True, timeout=2.0)
     if msg:
-        alt = msg.relative_alt / 1000.0  # in meters
-        print(f"📡 Altitude : {alt:.2f} m")
+        alt = msg.relative_alt / 1000.0  
+        print(f"Altitude : {alt:.2f} m")
         return alt
     else:
-        print("⚠ No altitude data received!")
+        print("No altitude data received!")
         return None
 
-# ------------------ [3] Get Vertical Velocity ------------------
+
 def get_vertical_velocity(master):
     msg = master.recv_match(type="GLOBAL_POSITION_INT", blocking=True, timeout=2.0)
     if msg:
-        vz = msg.vz / 100.0  # cm/s to m/s
+        vz = msg.vz / 100.0  
         return vz
     else:
-        print("⚠ No vertical velocity data!")
+        print("No vertical velocity data!")
         return None
 
-# ------------------ [4] Get Optical Flow Data ------------------
+
 def get_optical_flow_xy(master):
     for msg_type in ["OPTICAL_FLOW_RAD", "OPTICAL_FLOW"]:
         msg = master.recv_match(type=msg_type, blocking=True, timeout=2.0)
@@ -41,12 +41,12 @@ def get_optical_flow_xy(master):
             except AttributeError:
                 opt_x = msg.flow_x
                 opt_y = msg.flow_y
-            print(f"🧭 Optical Flow => opt_x: {opt_x:.4f}, opt_y: {opt_y:.4f}")
+            print(f"Optical Flow => opt_x: {opt_x:.4f}, opt_y: {opt_y:.4f}")
             return opt_x, opt_y
-    print("⚠ No optical flow data!")
+    print("No optical flow data!")
     return None, None
 
-# ------------------ [5] Arm Motors ------------------
+
 def arm_motors(master):
     print("🛠 Arming motors...")
     master.mav.command_long_send(
@@ -55,11 +55,11 @@ def arm_motors(master):
         0, 1, 0, 0, 0, 0, 0, 0
     )
     master.motors_armed_wait()
-    print("✅ Motors armed")
+    print("Motors armed")
 
-# ------------------ [6] Set to LOITER mode ------------------
+
 def set_loiter_mode(master):
-    print("🔄 Switching to LOITER mode...")
+    print("Switching to LOITER mode...")
     mode = 'LOITER'
     mode_id = master.mode_mapping()[mode]
     master.mav.set_mode_send(
@@ -67,11 +67,11 @@ def set_loiter_mode(master):
         mavutil.mavlink.MAV_MODE_FLAG_CUSTOM_MODE_ENABLED,
         mode_id
     )
-    print(f"✅ Mode set to {mode}")
+    print(f"Mode set to {mode}")
 
-# ------------------ [7] Takeoff using Altitude ------------------
+
 def takeoff_to_altitude(master, target_alt):
-    print(f"🚀 Taking off to {target_alt} meters...")
+    print(f"Taking off to {target_alt} meters...")
     throttle = 1500
 
     while True:
@@ -81,9 +81,9 @@ def takeoff_to_altitude(master, target_alt):
 
         if altitude < target_alt * 0.95:
             throttle = min(throttle + 10, 1700)
-            print(f"⬆ Increasing throttle: {throttle}")
+            print(f"Increasing throttle: {throttle}")
         else:
-            print(f"✅ Target altitude reached: {altitude:.2f}m")
+            print(f"Target altitude reached: {altitude:.2f}m")
             break
 
         master.mav.rc_channels_override_send(
@@ -92,9 +92,9 @@ def takeoff_to_altitude(master, target_alt):
         )
         time.sleep(0.5)
 
-# ------------------ [8] Hover with Telemetry ------------------
+
 def hover_with_telemetry(master, duration=30):
-    print(f"🛸 Hovering for {duration} seconds with telemetry logs...")
+    print(f"Hovering for {duration} seconds with telemetry logs...")
     hover_time = 0
 
     while hover_time < duration:
@@ -104,26 +104,26 @@ def hover_with_telemetry(master, duration=30):
         battery_voltage = get_battery_voltage(master)
 
         if None not in (altitude, vz, opt_x, opt_y, battery_voltage):
-            print(f"📊 TELEMETRY => Altitude(Z): {altitude:.2f}m | Vz: {vz:.2f} m/s | opt_x: {opt_x:.4f} | opt_y: {opt_y:.4f} | Battery: {battery_voltage:.2f} V")
+            print(f"TELEMETRY => Altitude(Z): {altitude:.2f}m | Vz: {vz:.2f} m/s | opt_x: {opt_x:.4f} | opt_y: {opt_y:.4f} | Battery: {battery_voltage:.2f} V")
         else:
-            print("⚠ Incomplete telemetry data")
+            print("Incomplete telemetry data")
 
-        # Check for low battery
+        
         if battery_voltage is not None and battery_voltage < 14.8:
-            print("⚠ Low battery voltage detected! Initiating emergency landing...")
+            print("Low battery voltage detected! Initiating emergency landing...")
             gradual_landing(master)
             return
 
         time.sleep(1)
         hover_time += 1
 
-    # After 30 seconds of hovering, trigger gradual landing
-    print("🕒 Hovering completed! Initiating gradual landing...")
+    
+    print("Hovering completed! Initiating gradual landing...")
     gradual_landing(master)
 
-# ------------------ [9] Gradual Landing ------------------
+
 def gradual_landing(master):
-    print("🛬 Starting gradual landing...")
+    print("Starting gradual landing...")
 
     while True:
         altitude = get_altitude(master)
@@ -131,7 +131,7 @@ def gradual_landing(master):
             continue
 
         if altitude <= 0.3:
-            print("✅ Touchdown confirmed")
+            print("Touchdown confirmed")
             break
 
         if altitude > 1.5:
@@ -147,37 +147,35 @@ def gradual_landing(master):
             master.target_system, master.target_component,
             0, 0, throttle, 0, 0, 0, 0, 0
         )
-        print(f"🔽 Descending - Throttle: {throttle}")
+        print(f"Descending - Throttle: {throttle}")
         time.sleep(1)
 
-    # Neutral throttle
+   
     master.mav.rc_channels_override_send(
         master.target_system, master.target_component,
         0, 0, 1000, 0, 0, 0, 0, 0
     )
 
-    print("🛑 Disarming motors...")
+    print("Disarming motors...")
     master.mav.command_long_send(
         master.target_system, master.target_component,
         mavutil.mavlink.MAV_CMD_COMPONENT_ARM_DISARM, 0, 0, 0, 0, 0, 0, 0, 0
     )
-    print("✅ Motors disarmed")
+    print("Motors disarmed")
 
-# ------------------ [10] Get Battery Voltage ------------------
 def get_battery_voltage(master):
     msg = master.recv_match(type="SYS_STATUS", blocking=True, timeout=2.0)
     if msg:
-        voltage = msg.voltage_battery / 1000.0  # convert mV to V
-        print(f"🔋 Battery Voltage: {voltage:.2f} V")
+        voltage = msg.voltage_battery / 1000.0  
+        print(f"Battery Voltage: {voltage:.2f} V")
         return voltage
     else:
         print("⚠ No battery status received!")
         return None
 
-# ------------------ [11] Main Execution ------------------
 if __name__ == "__main__":
     master = connect_mavlink()
-    TARGET_ALTITUDE = 3.0  # meters
+    TARGET_ALTITUDE = 3.0  
 
     try:
         arm_motors(master)
@@ -186,6 +184,6 @@ if __name__ == "__main__":
         hover_with_telemetry(master, duration=30)
 
     finally:
-        print("🔌 Disconnecting...")
+        print("Disconnecting...")
         master.close()
-        print("✅ Disconnected successfully")
+        print("Disconnected successfully")
